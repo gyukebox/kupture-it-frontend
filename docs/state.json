@@ -1,0 +1,34 @@
+{
+  "users": {
+    "isLoggedIn": true,
+    "user": {
+      "id": "asdfasfs",
+      "achievements": [
+        {
+          "id": 4,
+          "name": "asfsdf",
+          "icon": "adfasfsdf"
+        }
+      ]
+    }
+  },
+  "posts": [
+    {
+      "id": "",
+      "author": "gyukebox",
+      "text": "adfasdf",
+      "image": "https://adfasf",
+      "lat": 3,
+      "lon": 4,
+      "likes": 5,
+      "comments": [
+        {
+          "id": "asdfasfs",
+          "author": "asfdasfas",
+          "text": "asdfasfasf",
+          "likes": 12
+        }
+      ]
+    }
+  ]
+}
