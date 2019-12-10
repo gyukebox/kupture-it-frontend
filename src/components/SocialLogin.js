@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import LoginButton from '../assets/img/kakao_account_login_btn_medium_wide.png';

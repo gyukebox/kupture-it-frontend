@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
     case REGISTER_SUCCESSFUL:
-      return { isLoggedIn: true, user: action.response.id };
+      return { isLoggedIn: true, user: action.response };
     case LOGOUT:
       return initialState;
     default:

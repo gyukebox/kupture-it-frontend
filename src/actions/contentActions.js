@@ -1,75 +1,4 @@
-const contents = [
-  {
-    id: 'post-1234',
-    author: 'gyukebox',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur ' +
-      'adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ' +
-      'ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse' +
-      ' cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
-      'sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    image: null,
-    latitude: 37.5407667,
-    longitude: 127.0771541,
-  },
-  {
-    id: 'post-5678',
-    author: 'gyukebox',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur ' +
-      'adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ' +
-      'ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse' +
-      ' cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
-      'sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    image: null,
-    latitude: 37.5407667,
-    longitude: 127.0771541,
-  },
-  {
-    id: 'post-9012',
-    author: 'gyukebox',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur ' +
-      'adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ' +
-      'ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse' +
-      ' cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
-      'sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    image: null,
-    latitude: 37.5407667,
-    longitude: 127.0771541,
-  },
-  {
-    id: 'post-3456',
-    author: 'gyukebox',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur ' +
-      'adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ' +
-      'ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse' +
-      ' cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
-      'sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    image: null,
-    latitude: 37.5407667,
-    longitude: 127.0771541,
-  },
-  {
-    id: 'post-7890',
-    author: 'gyukebox',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur ' +
-      'adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ' +
-      'ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse' +
-      ' cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
-      'sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    image: null,
-    latitude: 37.5407667,
-    longitude: 127.0771541,
-  },
-];
+import http from '../http';
 
 export const START_LOAD_CONTENTS = 'START_LOAD_CONTENTS';
 export const LOAD_CONTENTS_SUCCESSFUL = 'LOAD_CONTENTS_SUCCESSFUL';
@@ -99,14 +28,13 @@ export const createContentFailed = error => ({
   error,
 });
 
-export const loadContents = (limit = 5, offset = 1) => async dispatch => {
+export const loadContents = () => async dispatch => {
   dispatch(startLoadContents());
   try {
-    return dispatch(
-      loadContentsSuccessful(contents.slice(offset - 1, offset + limit - 1)),
-    );
+    const response = await http.get('/posts');
+    dispatch(loadContentsSuccessful([...response.data]));
   } catch (error) {
-    return dispatch(loadContentsFailed(error));
+    dispatch(loadContentsFailed(error));
   }
 };
 
@@ -119,12 +47,14 @@ export const createContent = (
 ) => async dispatch => {
   dispatch(startCreateContent());
   try {
-    console.log(author);
-    console.log(text);
-    console.log(image);
-    console.log(latitude);
-    console.log(longitude);
-    return dispatch(createContentSuccessful(''));
+    const response = await http.post('/posts', {
+      author,
+      text,
+      image,
+      latitude,
+      longitude,
+    });
+    return dispatch(createContentSuccessful(response.data));
   } catch (error) {
     return dispatch(createContentFailed(error));
   }

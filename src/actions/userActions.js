@@ -70,8 +70,9 @@ export const socialLogin = provider => async dispatch => {
       const { properties } = await Kakao.API.request({
         url: '/v2/user/me',
       });
-      console.log(properties);
-      dispatch(loginSuccessful(properties));
+      // eslint-disable-next-line camelcase
+      const { nickname, profile_image } = properties;
+      dispatch(loginSuccessful({ id: nickname, image: profile_image }));
     } catch (error) {
       dispatch(socialLoginFailed(error));
     }

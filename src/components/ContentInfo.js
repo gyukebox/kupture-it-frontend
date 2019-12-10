@@ -5,11 +5,9 @@ import ContentAuthor from './ContentAuthor';
 
 const ContentInfoWrapper = styled(Col)`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
-
-// TODO: Add PropTypes
 
 export default function ContentInfo({ author, text, image }) {
   return (

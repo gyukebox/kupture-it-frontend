@@ -14,7 +14,7 @@ const ContentLocation = ({ contentId, latitude, longitude }) => {
 
       const container = document.getElementById(`map-${contentId}`);
       const center = new maps.LatLng(latitude, longitude);
-      const map = new maps.Map(container, { center, level: 4 });
+      const map = new maps.Map(container, { center });
 
       const marker = new maps.Marker({ position: center });
       marker.setMap(map);
